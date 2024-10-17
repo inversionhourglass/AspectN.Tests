@@ -1,0 +1,3 @@
+[submodule "src/Shared.Cecil.AspectN"]
+	path = src/Shared.Cecil.AspectN
+	url = https://github.com/inversionhourglass/Shared.Cecil.AspectN.git
