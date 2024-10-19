@@ -1,19 +1,18 @@
 ﻿using Mono.Cecil;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Tests.Cases
 {
-    public class SyntaxTests
+    public class CctorTests
     {
         [Theory]
         [ClassData(typeof(AssemblyData))]
-        public void AsyncNullTest(AssemblyDefinition assemblyDef, bool compositeAccessibility)
+        public void AnyCctorTest(AssemblyDefinition assemblyDef, bool compositeAccessibility)
         {
-            var pattern = "execution(async null *(..))";
+            var pattern = "cctor(*(..))";
             var patternMatches = assemblyDef.FindMethods(pattern, compositeAccessibility).ToArray();
-            var lambdaMatches = assemblyDef.FindMethods(md => md.ReturnType.IsAny(typeof(Task), typeof(ValueTask))).ToArray();
+            var lambdaMatches = assemblyDef.FindMethods(md => md.IsConstructor && md.IsStatic).ToArray();
 
             Assert.NotEmpty(patternMatches);
             Assert.Equal(lambdaMatches, patternMatches);
